@@ -1,0 +1,5 @@
+-   id: azure-bicep-build
+    name: Build Azure Bicep code
+    description: Build Azure Bicep code to check for validation errors
+    language: script
+    entry: find . -name \*.bicep -exec az bicep build --file {} --outfile pre-commit-temp.json \; && rm pre-commit-temp.json
