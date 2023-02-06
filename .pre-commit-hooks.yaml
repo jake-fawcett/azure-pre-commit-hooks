@@ -2,5 +2,6 @@
     name: build azure bicep code
     description: Build Azure Bicep code to check for validation errors
     language: script
-    entry: ./azure-bicep-build.sh
+    require_serial: true
+    entry: hooks/azure-bicep-build.sh
     files: .*.bicep$

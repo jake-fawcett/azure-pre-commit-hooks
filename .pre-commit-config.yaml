@@ -9,6 +9,6 @@ repos:
   - id: no-commit-to-branch
     args: [--branch, main]
 - repo: https://github.com/Jake-Fawcett/azure-pre-commit-hooks
-  rev: main
+  rev: bugfix/hook-error-and-formatting
   hooks:
     - id: azure-bicep-build
