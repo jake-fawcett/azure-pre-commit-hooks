@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Script to find bicep files and run az bicep build to validate, then remove any outputs produced
 set -eo pipefail
 
