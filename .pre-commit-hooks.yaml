@@ -2,4 +2,4 @@
     name: build azure bicep code
     description: Build Azure Bicep code to check for validation errors
     language: script
-    entry: /bin/bash azure-bicep-build.sh
+    entry: ./azure-bicep-build.sh
