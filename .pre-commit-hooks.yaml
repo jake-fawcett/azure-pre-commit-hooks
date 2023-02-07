@@ -11,4 +11,4 @@
     description: PSRule iac linting
     language: script
     entry: hooks/psrule.ps1
-    files: .*(.bicep|.json)$
+    files: .*.(bicep|json)$
