@@ -5,3 +5,10 @@
     require_serial: true
     entry: hooks/azure-bicep-build.sh
     files: .*.bicep$
+
+-   id: arm-bicep-psrule
+    name: lint azure iac
+    description: PSRule iac linting
+    language: script
+    entry: hooks/psrule.ps1
+    files: .*(.bicep|.json)$

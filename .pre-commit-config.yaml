@@ -9,6 +9,15 @@ repos:
   - id: no-commit-to-branch
     args: [--branch, main]
 - repo: https://github.com/Jake-Fawcett/azure-pre-commit-hooks
-  rev: bugfix/hook-error-and-formatting
+  rev: main
   hooks:
     - id: azure-bicep-build
+
+- repo: local
+  hooks:
+  - id: arm-bicep-psrule
+    name: lint azure iac
+    description: PSRule iac linting
+    language: script
+    entry: hooks/psrule.ps1
+    files: .*(.bicep|.json)$
