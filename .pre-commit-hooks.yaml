@@ -6,8 +6,8 @@
     entry: hooks/azure-bicep-build.sh
     files: .*.bicep$
 
--   id: arm-bicep-psrule
-    name: lint azure iac
+-   id: arm-bicep-psrule-linting
+    name: psrule arm and bicep linting
     description: PSRule iac linting
     language: script
     entry: hooks/psrule.ps1
