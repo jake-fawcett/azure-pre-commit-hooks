@@ -9,6 +9,7 @@ repos:
   - id: no-commit-to-branch
     args: [--branch, main]
 - repo: https://github.com/Jake-Fawcett/azure-pre-commit-hooks
-  rev: bugfix/hook-error-and-formatting
+  rev: feature/psrule-hook
   hooks:
     - id: azure-bicep-build
+    - id: arm-bicep-psrule-linting
