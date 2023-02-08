@@ -9,7 +9,7 @@ repos:
   - id: no-commit-to-branch
     args: [--branch, main]
 - repo: https://github.com/Jake-Fawcett/azure-pre-commit-hooks
-  rev: feature/arm-build
+  rev: main
   hooks:
     - id: azure-bicep-build
     - id: azure-arm-build
