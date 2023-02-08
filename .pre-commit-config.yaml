@@ -9,7 +9,8 @@ repos:
   - id: no-commit-to-branch
     args: [--branch, main]
 - repo: https://github.com/Jake-Fawcett/azure-pre-commit-hooks
-  rev: feature/psrule-hook
+  rev: feature/arm-build
   hooks:
     - id: azure-bicep-build
+    - id: azure-arm-build
     - id: arm-bicep-psrule-linting

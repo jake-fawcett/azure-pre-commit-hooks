@@ -1,0 +1,152 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.14.6.61914",
+      "templateHash": "15876030974373445258"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "This is the resource location"
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Storage Account name"
+      }
+    },
+    "storageAccountSku": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Storage Account sku"
+      }
+    },
+    "storageAccountTier": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Storage Account tier"
+      }
+    },
+    "webAppServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Web App Server name"
+      }
+    },
+    "webAppServerKind": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Web App Server kind"
+      }
+    },
+    "webAppServerSku": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Web App Server sku"
+      }
+    },
+    "webAppServerSkuCapacity": {
+      "type": "int",
+      "metadata": {
+        "description": "This is the Web App Server capacity"
+      }
+    },
+    "webAppName": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Web App name"
+      }
+    },
+    "webAppLinuxFxVersion": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the Web App Software version"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicNetworkAccess": "Enabled",
+        "accessTier": "[parameters('storageAccountTier')]",
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "networkAcls": {
+          "bypass": "Logging, Metrics, AzureServices",
+          "defaultAction": "Deny"
+        }
+      },
+      "sku": {
+        "name": "[parameters('storageAccountSku')]"
+      },
+      "kind": "StorageV2"
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/tableServices",
+      "apiVersion": "2022-05-01",
+      "name": "[format('{0}/{1}', parameters('storageAccountName'), 'default')]",
+      "properties": {},
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/tableServices/tables",
+      "apiVersion": "2022-05-01",
+      "name": "[format('{0}/{1}/{2}', parameters('storageAccountName'), 'default', 'users')]",
+      "properties": {},
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/tableServices', parameters('storageAccountName'), 'default')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('webAppServerName')]",
+      "location": "[parameters('location')]",
+      "kind": "[parameters('webAppServerKind')]",
+      "properties": {
+        "reserved": true
+      },
+      "sku": {
+        "name": "[parameters('webAppServerSku')]",
+        "capacity": "[parameters('webAppServerSkuCapacity')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('webAppName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('webAppServerName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "[parameters('webAppLinuxFxVersion')]",
+          "appSettings": [
+            {
+              "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
+              "value": "True"
+            }
+          ]
+        }
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('webAppServerName'))]"
+      ]
+    }
+  ]
+}

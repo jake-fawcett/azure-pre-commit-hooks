@@ -6,6 +6,14 @@
     entry: hooks/azure-bicep-build.sh
     files: .*.bicep$
 
+-   id: azure-arm-build
+    name: build azure arm code
+    description: Build Azure ARM code to check for validation errors (note - runs against any json)
+    language: script
+    require_serial: true
+    entry: hooks/azure-arm-build.sh
+    files: .*.json$
+
 -   id: arm-bicep-psrule-linting
     name: psrule arm and bicep linting
     description: PSRule iac linting
