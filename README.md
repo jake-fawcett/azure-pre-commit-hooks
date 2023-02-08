@@ -9,6 +9,14 @@ find . -name \*.bicep -exec az bicep build --file {} --outfile pre-commit-temp.j
 rm pre-commit-temp.json
 ```
 
+## azure-arm-build
+Script to find json (arm) files and run az bicep decompile to validate, then remove any outputs produced
+
+```
+find . -name \*.bicep -exec az bicep decompile --file {} --outfile pre-commit-temp.bicep \;
+rm pre-commit-temp.bicep
+```
+
 ## arm-bicep-psrule-linting
 Script to run PSRule linting against Arm and Bicep templates. ps-rule.yaml config for PSRule
 
