@@ -13,8 +13,7 @@ rm pre-commit-temp.json
 Script to find json (arm) files and run az bicep decompile to validate, then remove any outputs produced
 
 ```
-find . -name \*.bicep -exec az bicep decompile --file {} --outfile pre-commit-temp.bicep \;
-rm pre-commit-temp.bicep
+find . -name \*.json -exec az bicep decompile --file {} \; -exec sh -c 'rm ${1%????}bicep' sh {} \;
 ```
 
 ## arm-bicep-psrule-linting
